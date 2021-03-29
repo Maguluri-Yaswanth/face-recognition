@@ -1,0 +1,36 @@
+<div class="ma4 mt0">
+   <img src="assets/logo.png" alt="logo" width="50px" height="100px">
+</div> 
+
+<div>
+    <div class="white f3 center">
+        Yaswanth, your current rank is...
+    </div>
+    <div class="white f3 center">
+        #5
+    </div>
+</div>
+
+<div>
+    <p class="f3 center">
+        This will Detect faces in your pictures. Give it a try.
+    </p>
+    <div class="center">
+        <div class="form center pa4 br3 shadow-5">
+        <input class="f4 pa2 w-70 center" type="text"  [ngModel]="url" (ngModelChange)="assignUrl($event)">
+        <button class="w-30 grow f4 link ph3 pv2 dib white bg-light-purple" (click)="onButtonClick()">Detect</button>
+    </div>
+    </div> 
+</div>
+
+<div class="center ma" *ngIf="display">
+    <div id="imageSpace" class="absolute mt2">
+        <img id="inputImage" [src]="image" alt="searched image" width="500px" height="auto">
+ 
+            <div *ngFor="let box of values" class="bounding-box" style.inset="{{box}}">
+
+            </div>
+    </div>   
+</div>
+
+ 
