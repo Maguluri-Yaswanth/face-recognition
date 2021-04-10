@@ -8,6 +8,8 @@ import { ContentpageComponent } from './contentpage/contentpage.component';
 import { ParticlesModule } from 'angular-particle';
 import { FormsModule } from '@angular/forms';
 
+import { HttpClientModule } from '@angular/common/http'; 
+import { DataService } from './data.service';
 
 @NgModule({
   declarations: [
@@ -19,9 +21,10 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     ParticlesModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import * as Clarifai from 'clarifai'
+import * as Clarifai from 'clarifai';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-contentpage',
@@ -13,20 +14,23 @@ export class ContentpageComponent implements OnInit {
   display:boolean=false;
   boxes:any;
   values:any;
+  count:any=0;
   app = new Clarifai.App({
-    apiKey: 'Your ApiKey Here...'
+    apiKey: 'Your Api Key goes here...'
    });
 
-  constructor() {    }
+  constructor(private dataService: DataService) {    }
 
   ngOnInit() {
-
-  } 
+    
+  }  
 
   assignUrl(value){
-    this.display=false;
+    this.values=[];
+    this.display=true;
     this.url=value;
-    console.log(this.url);
+    this.image=this.url;
+    // console.log(this.url);
   }
 
   onButtonClick(){
@@ -44,9 +48,9 @@ export class ContentpageComponent implements OnInit {
   }
 
   calculateFaceLocation= (data) =>{
-    console.log("data",data);
+    // console.log("data",data);
     const clarifaiFaces = data.outputs[0].data.regions.map(region=> region.region_info.bounding_box);
-    console.log("clarifaiFace",clarifaiFaces);
+    // console.log("clarifaiFace",clarifaiFaces);
     this.boxes = clarifaiFaces.map(clarifaiFace=>{  
       return{
         leftCol: clarifaiFace.left_col * 100,
@@ -55,14 +59,18 @@ export class ContentpageComponent implements OnInit {
         bottomRow: 100 - (clarifaiFace.bottom_row * 100)
       }
     });
-    console.log("boxes",this.boxes);
+    // console.log("boxes",this.boxes);
     this.displayFaceBox(this.boxes);
   }
 
-  displayFaceBox = (displayBoxes) =>{
+  displayFaceBox = async (displayBoxes) =>{
     this.values= displayBoxes.map(box=>`${box.topRow}% ${box.rightCol}% ${box.bottomRow}% ${box.leftCol}%`);
-    console.log("insetValues",this.values);
-  }
+    // console.log("insetValues",this.values);
+
+    this.count= await this.dataService.recognizedFaces(displayBoxes).subscribe((data: any[])=>{
+      this.count = data;
+    })  
+  } 
 
 
 }
