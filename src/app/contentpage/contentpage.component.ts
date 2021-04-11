@@ -16,8 +16,7 @@ export class ContentpageComponent implements OnInit {
   values:any;
   count:any=0;
   app = new Clarifai.App({
-    apiKey: "094543c3f5f943a2bac07b7b06a3370c"
-    // 'Your Api Key goes here...'
+    apiKey: 'Your Api Key goes here...'
    });
 
   constructor(private dataService: DataService) {    }
